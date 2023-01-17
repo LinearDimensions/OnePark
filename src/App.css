@@ -350,6 +350,10 @@ th {
   color:white;
 }
 
+td {
+  color: while;
+}
+
 .project {
   padding: 80px 0;
   position: relative;
