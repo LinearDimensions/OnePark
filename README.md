@@ -1,16 +1,27 @@
-# Personal Portfolio Website in React
+# OnePark
+https://youtu.be/kWK1_ctG2x8
+OnePark provides all-in-one services: from open fault-reporting to lot availability and maintenance predictions using advanced machine learning, to help residents take responsibility of their estate.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<img width="1266" alt="Screen Shot 2022-06-19 at 2 18 18 PM" src="https://user-images.githubusercontent.com/50160672/174933373-1ba6cadf-1c9a-48c3-aa58-984d0bd62d82.png">
-
 Built using:
-
 - Front-end library: React
 - CSS framework: React-bootstrap
 - CSS animations library: Animate.css
 
-In the /personal-portfolio, you can run:
+Data sources: 
+- https://data.gov.sg/dataset/hdb-carpark-information
+- https://data.gov.sg/dataset/carpark-availability (2018-now)
+
+Machine Learning Model:
+- Used XGBoost library for the XGBRegressor, training it on features such as “Area Code”, “Total Lots”, “Carpark Lots”, “Hour of Day”, etc to predict the carpark’s lot availability at a given time
+
+Features:
+- View all carpark status (lot availability, facilities)
+- Report faults
+- View all open faults
+
+In the /OnePark, you can run:
 
 ### `npm start`
 
@@ -20,17 +31,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
