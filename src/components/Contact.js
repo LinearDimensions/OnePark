@@ -35,7 +35,7 @@ export const Contact = (prop) => {
     }
     formBody = formBody.join("&");
 
-    fetch('http://192.168.1.106:3000/report', {method: 'POST',headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},body: formBody})
+    fetch('http://42.60.179.123:3000/report', {method: 'POST',headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},body: formBody})
       .then(response => response.json())
     
     

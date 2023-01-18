@@ -10,11 +10,10 @@ export const Faults = () => {
   var count = 0;
 
   useEffect(() => {
-    fetch('http://192.168.1.106:3000/incidentreport/J24')
+    fetch('http://42.60.179.123:3000/incidentreport/J24')
       .then((res) => res.json())
       .then((result) => {console.log(result); setReport(result);}, (err) => console.log(err))
-  }, [])//
-
+  }, [])
   const increaseVote = (index) =>{
     votes[index]++;
     return votes;
@@ -48,9 +47,9 @@ export const Faults = () => {
                 <td>{row.user}</td>
                 <td>{'10💎'}</td>
                 <td><div class="voteRoundRect">
-                <div class="incrementUp" onClick={(e) => {votes.splice(count-1,1,votes[count-1]+1);setVotes(votes);setVote(votes[count-1]);}}></div> 
-                <div class="incrementDown" onClick={(e) => {votes.splice(count-1,1,votes[count-1]-1);setVotes(votes);setVote(votes[count-1]);}}></div>
-                <div class="count">{vote}</div>
+                <div class="incrementUp" onClick={(e) => {console.log(votes[i]);votes[i] = votes[i]+1;setVotes(votes);setVote(votes[i]);}}></div> 
+                <div class="incrementDown" onClick={(e) => {console.log(votes[i]);votes[i] = votes[i]-1;setVotes(votes);setVote(votes[i]);}}></div>
+                <div class="count">{votes[i]}</div>
               </div></td>
               </tr>
             ))}
@@ -60,3 +59,9 @@ export const Faults = () => {
     </section>
   );
 }
+/**
+ <div class="incrementUp" onClick={(e) => {votes.splice(count-1,1,votes[count-1]+1);setVotes(votes);setVote(votes[count-1]);}}></div> 
+                <div class="incrementDown" onClick={(e) => {votes.splice(count-1,1,votes[count-1]-1);setVotes(votes);setVote(votes[count-1]);}}></div>
+                <div class="count">{vote}</div>
+  
+ */
