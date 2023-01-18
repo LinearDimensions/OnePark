@@ -303,7 +303,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 /************ Carparks Css ************/
 .skill {
-  padding: 0 0 50px 0;
   position: relative;
 }
 .skill-bx {
@@ -316,6 +315,14 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .skill h2 {
 	font-size: 45px;
 	font-weight: 700;
+}
+
+.nearbyButton {
+	font-size: 30px;
+  color:#0051ff;
+  background: rgb(0, 0, 77);
+  border-radius: 20px;
+
 }
 .skill p {
     color: #B8B8B8;
@@ -342,16 +349,79 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 /************ Maps / Carparks Css ************/
+.plain {
+  all: unset;
+}
+
+/************ Maps / Carparks Css ************/
+.voteRoundRect {
+  display: flex;
+  flex-direction: column;
+  align-self: down;
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.incrementUp{
+  border-radius: 2rem 2rem 0 0;
+  background: green;
+  height: 50%;
+  margin-bottom: 1px/2;
+  text-align: center;
+  opacity: .5;
+  transition: .5s;
+  cursor: pointer;
+
+}
+.incrementDown{
+  border-radius: 0 0 2rem 2rem;
+  background: red;
+  height: 50%;
+  text-align: center;
+  opacity: .5;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.incrementUp:hover {
+    opacity: 1;    
+}
+
+.incrementDown:hover {
+  opacity: 1;    
+}
+
+.count {
+  position:absolute;
+
+  border-radius: .5rem .5rem;
+  top: 0;
+  border-radius: .1px;
+  margin: 7.5px;
+  width: 15px;
+  align-items: center;
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
+  line-height: 15px;
+  font-size: 15px;
+}
+
 
 
 
 /************ Projects Css ************/
+.faultReporting{
+  margin-top: 20px;  
+}
+
 th {
   color:white;
 }
 
 td {
-  color: while;
+  color: white;
 }
 
 .project {
@@ -568,14 +638,56 @@ td {
   max-width: fit-content;
 }
 
-
 .statusBarWhite{
+  justify-content: center;
+  display: flex;
+}
+
+.statusBarWhite h4{
+  border-radius: 20px;
+  padding: 10px;
+  margin: 0px 20px;
+  background: #4d0039;
+  color:white;
+  max-width: fit-content;
+  justify-content: center;
+}
+
+.expandable{
+  overflow: hidden;
   border-radius: 20px;
   background: white;
   color: black;
-  max-width: fit-content;
+  height: 24px;
+  width: 110px;
+  text-align: right;
+  text-overflow: clip;
+  }
+
+.expandable:hover{
+  border-radius: 10px;
+  background: white;
+  color: black;
+  height: 75px;
+  width: 200px;
+  text-overflow: clip;
+  transition-property: radius, width, height;
+  transition-duration: .25s, .25s, .13s;
+  transition-delay: 0s, 0s, .17s;
+  transition-timing-function:linear;
+  text-align: right;
 }
 
+.redeemButton{
+  background: #000;
+  border-radius: 10px;
+  color: white;
+}
+
+.expandable p{
+  margin-bottom: 0.1rem;
+  display: block;
+}
 
 .faults{
   background-image: url('./assets/img/carPark1.jpg');
