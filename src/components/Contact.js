@@ -5,7 +5,7 @@ import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 //import axios from 'axios';
 
-export const Contact = () => {
+export const Contact = (prop) => {
   const formInitialDetails = {
     carpark: '',
     report: ''
@@ -35,7 +35,7 @@ export const Contact = () => {
     }
     formBody = formBody.join("&");
 
-    fetch('http://42.60.27.95:3000/report', {method: 'POST',headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},body: formBody})
+    fetch('http://192.168.1.106:3000/report', {method: 'POST',headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},body: formBody})
       .then(response => response.json())
     
     
@@ -67,11 +67,11 @@ export const Contact = () => {
       setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
     }
     */
-    
+    console.log(window.$selectedID);
     await new Promise(r => setTimeout(r, 1000));
     let result = 200;
 
-    if (result == 200) {
+    if (result === 200) {
       setStatus({ succes: true, message: 'Fault reported successfully'});
     } else {
       setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
@@ -87,7 +87,18 @@ export const Contact = () => {
 
   return (
     <section className="contact" id="connect">
-      <Container>
+
+      <div>
+        <h2>Navigating... 🔊</h2>
+
+        <div className='statusBarWhite'>
+          <h4>350m (2min) </h4>
+          <h4>$0.20/hr</h4>
+          <h4>26 lots🟢</h4>
+        </div>
+
+      </div>
+      <Container className="faultReporting">
         <Row className="align-items-center">
           <Col size={12} md={6}>
             <TrackVisibility>
@@ -103,12 +114,11 @@ export const Contact = () => {
                 <h2>Report a Fault</h2>
                 <form onSubmit={handleSubmit}>
                   <Row>
-                  <input id="carpark" required  value={formDetails['carpark']} placeholder='Carpark' onChange={(e) => onFormUpdate('carpark', e.target.value)} />
+                  <input id="carpark" required  value={window.$selectedID} placeholder='Carpark' onChange={(e) => onFormUpdate('carpark', window.$selectedID)} />
                   </Row>
                   <Row>
                   <textarea id="report" rows="6" required value={formDetails['report']} placeholder='Message' onChange={(e) => onFormUpdate('report', e.target.value)}></textarea>
-                  </Row>
-                  <Row>
+                  <input type="file" id="uploadImg" name="img" accept="image/*"></input>
                   <Col size={12} className="px-1">
                   <button id="submit" style={{'borderRadius':20,'marginTop':0}}><span>{buttonText}</span></button>
                   {status.message &&

@@ -5,23 +5,23 @@ import mapboxgl from 'mapbox-gl';
 import useSWR from 'swr';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import { Contact } from "./Contact";
 // from https://github.com/shahibuzzaman/covid19-tracker-reactJS
 import './Map.css';
 mapboxgl.accessToken =
   'pk.eyJ1Ijoic2hhaGlidXp6YW1hbiIsImEiOiJjazhtMjlsZGMwZTdwM2xvNHYyZWZnaW95In0.wv7TDBBzK5g_Rqwi32PWag';
 
-export function Carparks() {
+export const Carparks = () => {
   const mapContainer = useRef(null);
-  const [selectedID, changeID] = useState('');
 
-  useEffect(() => {
+  function loadMap(center, zoom) {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/shahibuzzaman/ck909hv6e00o81ik4qee1l32u',
-      center: [103.8198, 1.3521],
-      zoom: 10.5,
+      center: center,
+      zoom: zoom,
       });
-
+      
     map.once('load', function () {
       map.addSource('points',
         {type: 'geojson',data: {
@@ -151,10 +151,17 @@ export function Carparks() {
           map.getCanvas().style.cursor = '';
           popup.remove();
         });
-
+        
+        map.on('click', 'circles', function (e) {
+          window.$selectedID = e.features[0].properties.carParkNo;
+          window.location = 'http://localhost:3000/#report_fault';
+          popup.remove();
+        });
         
       });
-    }, []);
+    }
+  
+  useEffect(() => loadMap([103.8198, 1.3521],10.5), []);
 
     return (
       <section className="skill" id="carparks">
@@ -162,7 +169,7 @@ export function Carparks() {
               <div className="row">
                   <div className="col-12">
                       <div className="skill-bx wow zoomIn">
-                          <h2>Carparks</h2>
+                          <h2>Carparks <button className='nearbyButton' onClick={() => loadMap([103.7312,1.3447],16)}>Nearby</button></h2>
                           <div className='mapContainer' >
                             <div ref={mapContainer} className='mapContainer shadow-sm' /></div>
                           </div>

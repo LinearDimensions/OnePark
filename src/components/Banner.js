@@ -57,7 +57,7 @@ export const Banner = () => {
               <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                 <h1>{`Greetings from HDB!`} </h1>
                   <p>Let's work together to foster a good carpark environment for everyone to enjoy!</p>
-                  <a href='https://bit.ly/ONEpark' style={{'maxWidth':'fit-content','width': '10%','display': 'contents'}}><button type="button">Learn More <ArrowRightCircle size={25} /></button></a>
+                  <a href='https://youtu.be/kWK1_ctG2x8' style={{'maxWidth':'fit-content','width': '10%','display': 'contents'}}><button type="button">Learn More <ArrowRightCircle size={25} /></button></a>
               </div>}
             </TrackVisibility>
           </Col>

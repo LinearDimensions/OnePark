@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import 'animate.css';
 
 export const Faults = () => {
   const [report, setReport] = useState([]);
-  const [detail, setDetail] = useState("");
-  const [data, setData] = useState([]);
+  const [votes, setVotes] = useState(new Array(100).fill(0));
+  const [vote,setVote] = useState(0);
   var count = 0;
 
   useEffect(() => {
-    fetch('http://42.60.27.95:3000/incidentreport/J24')
+    fetch('http://192.168.1.106:3000/incidentreport/J24')
       .then((res) => res.json())
       .then((result) => {console.log(result); setReport(result);}, (err) => console.log(err))
-  }, [])
+  }, [])//
+
+  const increaseVote = (index) =>{
+    votes[index]++;
+    return votes;
+  }
 
   return (
     <section className="faults" id="faults">
@@ -21,7 +26,7 @@ export const Faults = () => {
       <h2>All Open Faults</h2>
         <table className="table">
           <thead className="thead-dark">
-            <tr>
+          <tr>
               <th>#</th>
               <th> Carpark </th>
               <th> Faults </th>
@@ -29,6 +34,7 @@ export const Faults = () => {
               <th> Scheduled Maintenance </th>
               <th> Reported By </th>
               <th> Rewards </th>
+              <th> Verify </th>
             </tr>
           </thead>
           <tbody>
@@ -41,6 +47,11 @@ export const Faults = () => {
                 <td>{row.timestamp}</td>
                 <td>{row.user}</td>
                 <td>{'10💎'}</td>
+                <td><div class="voteRoundRect">
+                <div class="incrementUp" onClick={(e) => {votes.splice(count-1,1,votes[count-1]+1);setVotes(votes);setVote(votes[count-1]);}}></div> 
+                <div class="incrementDown" onClick={(e) => {votes.splice(count-1,1,votes[count-1]-1);setVotes(votes);setVote(votes[count-1]);}}></div>
+                <div class="count">{vote}</div>
+              </div></td>
               </tr>
             ))}
           </tbody>

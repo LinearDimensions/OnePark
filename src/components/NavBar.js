@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import Collapsible from 'react-collapsible';
 import logo from '../assets/img/logo.svg';
 import navIcon1 from '../assets/img/nav-icon1.svg';
 import navIcon2 from '../assets/img/nav-icon2.svg';
@@ -41,11 +42,13 @@ export const NavBar = () => {
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Welcome, Daniel Li</Nav.Link>
+              <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Welcome, David Li</Nav.Link>
               <Nav.Link href="#carparks" className={activeLink === 'carparks' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('carparks')}>Carparks</Nav.Link>
               <Nav.Link href="#report_fault" className={activeLink === 'report_fault' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('report_fault')}>Report a Fault</Nav.Link>
               <Nav.Link href="#faults" className={activeLink === 'faults' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('report_fault')}>Faults</Nav.Link>
-              <div className='statusBarWhite'> 100💎</div>
+              <div className='expandable'> Wallet: 100💎
+                <p> NTUC Voucher <button className="redeemButton"> 5,000💎</button></p>
+                <p> Season Parking <button className="redeemButton"> 20,000💎</button></p></div>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -53,3 +56,12 @@ export const NavBar = () => {
     </Router>
   )
 }
+
+/**
+ 
+  <div className='expandable'> 
+              <Collapsible className='expandable' trigger="Wallet: 100💎">
+                <p> NTUC Voucher <button className="redeemButton"> 5,000💎</button></p>
+                <p> Season Parking <button className="redeemButton"> 20,000💎</button></p>
+            </Collapsible></div>
+ */
