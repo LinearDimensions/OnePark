@@ -1,56 +1,25 @@
-const express = require('express')
-const helper = require('./helper')
-const app = express()
-const port = 3000
+const express = require('express');
+const helper = require('./helper');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
+const port = process.env.PORT || 5000;
 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-  });
+require('dotenv').config();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.use(cors());
+app.use(express.json());
+
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri);
+const connection = mongoose.connection;
+connection.once('open',()=> {
+  console.log("MongoDB database connection established succesfully")
 })
 
+const reportRouter = require('./routes/report');
+app.use('/report', reportRouter);
 
-app.get('/incidentreport/:carparkname', (req, res) => {
-  var carpark = req.params.carparkname
-  helper.get_incident_report(carpark, function(data) {
-    res.send(data)
-  })
-})
-
-
-app.get('/carpark/:carparkname', (req, res) => {
-  var carpark = req.params.carparkname
-  helper.get_carpark(carpark, function(data) {
-    res.send(data)
-  })
-})
-
-
-app.post('/report', (req, res) => {
-  var carpark = req.body.carpark
-  var report = req.body.report
-  //var phone_number = req.body.phone_number
-
-  helper.insert_incident_report(carpark, report)
-  res.send(200)
-})
-
-app.get('/carparklot/:carparkname', (req, res) => {
-  var carpark = req.params.carparkname
-  helper.get_carparklot_availability(carpark, function(data) {
-    res.send(data)
-  })
-})
-
-
-app.listen(port, "192.168.1.13", () => {
+app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
