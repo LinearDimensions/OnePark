@@ -1,28 +1,36 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
+import TrackVisibility from 'react-on-screen';
 import 'animate.css';
+import axios from 'axios';
+
 
 export const Faults = () => {
   const [report, setReport] = useState([]);
   const [votes, setVotes] = useState(new Array(100).fill(0));
   const [vote,setVote] = useState(0);
+  const [rerender, setRerender] = useState(false);
   var count = 0;
 
   useEffect(() => {
-    fetch('http://42.60.179.123:3000/incidentreport/J24')
-      .then((res) => res.json())
-      .then((result) => {console.log(result); setReport(result);}, (err) => console.log(err))
-  }, [])
+    axios.get('http://localhost:5000/report/'+window.$selectedID)
+      .then((res) => setReport(res.data))
+      .catch ((err)=>  console.log(err))
+  }, [rerender,window.$selectedID])
+  
   const increaseVote = (index) =>{
     votes[index]++;
     return votes;
   }
 
+  // Implement Scroll and login votes
   return (
     <section className="faults" id="faults">
     <Container><Row className="align-items-center" id='openFaults'>
       <h2>All Open Faults</h2>
+      <TrackVisibility>
+              {({ isVisible }) => isVisible ? setRerender(true): setRerender(false)}
+        </TrackVisibility>
         <table className="table">
           <thead className="thead-dark">
           <tr>
@@ -34,16 +42,17 @@ export const Faults = () => {
               <th> Reported By </th>
               <th> Rewards </th>
               <th> Verify </th>
+              <th><div onClick={(e)=>setRerender(!rerender)}>🔃</div> </th>
             </tr>
           </thead>
           <tbody>
             {report.map((row, i) => (
               <tr key={row.id}>
                 <td>{++count}</td>
-                <td>{'J24'}</td>
+                <td>{window.$selectedID}</td>
                 <td>{row.report}</td>
-                <td><div className={row.status === 'in-progress' ? "statusBarRed" : "statusBarGreen"}>{row.status === 'in-progress' ? "Pending" : "Done"}</div></td>
-                <td>{row.timestamp}</td>
+                <td><div className={row.status === 'Pending' ? "statusBarRed" : "statusBarGreen"}>{row.status === 'Pending' ? "Pending" : "Done"}</div></td>
+                <td>{row.createdAt}</td>
                 <td>{row.user}</td>
                 <td>{'10💎'}</td>
                 <td><div class="voteRoundRect">

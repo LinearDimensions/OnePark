@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../assets/img/contact-img.svg";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
-//import axios from 'axios';
+import axios from 'axios';
 
 export const Contact = (prop) => {
   const formInitialDetails = {
-    carpark: '',
+    carpark: window.$selectedID||'',
     report: ''
   }
   const [formDetails, setFormDetails] = useState(formInitialDetails);
   const [buttonText, setButtonText] = useState('Send');
   const [status, setStatus] = useState({});
+  const [rerender, setRerender] = useState(false);
 
   const onFormUpdate = (category, value) => {
       setFormDetails({
@@ -21,67 +22,29 @@ export const Contact = (prop) => {
       })
   }
 
+  useEffect(() => {}, [rerender])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
 
+    var result = 400;
+
+    console.log(formDetails);
+    axios.post('http://localhost:5000/report/', formDetails)
+      .then(result = 200)
+      .catch(err => console.log(err.response));
     
-    
-    var formBody = [];
-    for (var property in formDetails) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(formDetails[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-
-    fetch('http://42.60.179.123:3000/report', {method: 'POST',headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},body: formBody})
-      .then(response => response.json())
-    
-    
-    /*
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({carpark: formDetails['carpark'], report: formDetails['report']})
-    };
-
-    //axios.post('http://localhost:3000/users/add', user)
-    //  .then(res => console.log(res.data));
-
-    let response = await fetch("http://localhost:3000/contact", { //change to axios
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(formDetails),
-    });
-
-    
-
-    let result = await response.json();
-
-    if (result.code == 200) {
-      setStatus({ succes: true, message: 'Message sent successfully'});
-    } else {
-      setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
-    }
-    */
-    console.log(window.$selectedID);
-    await new Promise(r => setTimeout(r, 1000));
-    let result = 200;
 
     if (result === 200) {
-      setStatus({ succes: true, message: 'Fault reported successfully'});
+      setStatus({ success: true, message: 'Fault reported successfully'});
     } else {
-      setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
+      setStatus({ success: false, message: 'Something went wrong, please try again later.'});
     }
-    console.log(formDetails);
+    await new Promise(r => setTimeout(r, 1000));
+    setStatus({ success: true, message: ''});
     setFormDetails(formInitialDetails);
     setButtonText("Sent");
-    document.getElementById("carpark").value = '';
-    document.getElementById("message").value = '';
-    
     
   };
 
@@ -114,7 +77,7 @@ export const Contact = (prop) => {
                 <h2>Report a Fault</h2>
                 <form onSubmit={handleSubmit}>
                   <Row>
-                  <input id="carpark" required  value={window.$selectedID} placeholder='Carpark' onChange={(e) => onFormUpdate('carpark', window.$selectedID)} />
+                  <input id="carpark" required  value={window.$selectedID} placeholder='Carpark' onClick={(e)=>{setRerender(!rerender); onFormUpdate('carpark', window.$selectedID);}}/>
                   </Row>
                   <Row>
                   <textarea id="report" rows="6" required value={formDetails['report']} placeholder='Message' onChange={(e) => onFormUpdate('report', e.target.value)}></textarea>

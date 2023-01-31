@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import useSWR from 'swr';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import axios from 'axios';
 
 import { Contact } from "./Contact";
 // from https://github.com/shahibuzzaman/covid19-tracker-reactJS
@@ -154,7 +155,7 @@ export const Carparks = () => {
         
         map.on('click', 'circles', function (e) {
           window.$selectedID = e.features[0].properties.carParkNo;
-          window.location = 'http://localhost:3000/#report_fault';
+          window.location = 'http://localhost:3000/#report_fault'; // facilitate UX
           popup.remove();
         });
         
